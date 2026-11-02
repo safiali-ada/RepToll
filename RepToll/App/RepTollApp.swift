@@ -18,6 +18,7 @@ struct RepTollApp: App {
                 .onChange(of: scenePhase) { _, phase in
                     if phase == .active { model.refresh() }
                 }
+                .task { await Store.shared.refresh() }
         }
         .modelContainer(for: WorkoutRecord.self)
     }

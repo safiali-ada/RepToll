@@ -27,6 +27,9 @@ Open `RepToll.xcodeproj` and run the **RepToll** scheme on a **physical iPhone**
 2. The **Family Controls** capability works in development builds right away. TestFlight and the App Store need Apple to approve the distribution entitlement: [request form](https://developer.apple.com/contact/request/family-controls-distribution).
 3. Tune `DetectionThresholds.default` (`minConfidence`) after a few real sessions.
 
+## Pricing
+Free plan locks 1 app; **RepToll Pro** is €0.99 every 3 months for unlimited apps. Setup and testing: [docs/MONETIZATION.md](docs/MONETIZATION.md).
+
 ## Tuning rep counting
 Settings → Tuning → **Record pose data** saves joint positions (no video) from each workout. Share the JSON files to add real-movement regression tests in `Packages/RepTollKit/Tests`.
 

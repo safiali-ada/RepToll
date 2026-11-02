@@ -1,0 +1,63 @@
+{
+  "identifier" : "4A1E7C2B",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_compatibilityTimeRate" : {
+      "3" : 6
+    },
+    "_failTransactionsEnabled" : false,
+    "_locale" : "it_IT",
+    "_storefront" : "ITA",
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21600001",
+      "localizations" : [
+
+      ],
+      "name" : "RepToll Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6760000001",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Lock unlimited apps and categories.",
+              "displayName" : "RepToll Pro",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.syedsafiali.RepToll.pro.quarterly",
+          "recurringSubscriptionPeriod" : "P3M",
+          "referenceName" : "RepToll Pro (3 months)",
+          "subscriptionGroupID" : "21600001",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

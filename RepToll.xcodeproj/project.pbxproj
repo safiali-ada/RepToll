@@ -516,6 +516,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Config/Extension.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J8G5UT5LRV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/RepTollShieldConfig-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = RepTollShieldConfig;
@@ -537,6 +538,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Config/Extension.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J8G5UT5LRV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/RepTollShieldConfig-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = RepTollShieldConfig;

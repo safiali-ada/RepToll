@@ -23,6 +23,30 @@ public final class SharedStore: @unchecked Sendable {
         static let isPaused = "isPaused"
         static let difficulty = "difficulty"
         static let lifetimeEarnedSeconds = "lifetimeEarnedSeconds"
+        static let isPro = "isPro"
+    }
+
+    /// Cached RepToll Pro status; the app re-verifies it with StoreKit on every launch.
+    public var isPro: Bool {
+        get { defaults.bool(forKey: Key.isPro) }
+        set { defaults.set(newValue, forKey: Key.isPro) }
+    }
+
+    /// Keeps the first restricted item so a selection fits the free plan.
+    public static func trimmedToFreePlan(_ selection: FamilyActivitySelection) -> FamilyActivitySelection {
+        var trimmed = FamilyActivitySelection()
+        if let app = selection.applicationTokens.first {
+            trimmed.applicationTokens = [app]
+        } else if let category = selection.categoryTokens.first {
+            trimmed.categoryTokens = [category]
+        } else if let domain = selection.webDomainTokens.first {
+            trimmed.webDomainTokens = [domain]
+        }
+        return trimmed
+    }
+
+    public static func count(_ selection: FamilyActivitySelection) -> Int {
+        selection.applicationTokens.count + selection.categoryTokens.count + selection.webDomainTokens.count
     }
 
     public var bankSeconds: Int {
@@ -45,10 +69,7 @@ public final class SharedStore: @unchecked Sendable {
         set { encode(newValue, Key.selection) }
     }
 
-    public var restrictedCount: Int {
-        let s = selection
-        return s.applicationTokens.count + s.categoryTokens.count + s.webDomainTokens.count
-    }
+    public var restrictedCount: Int { Self.count(selection) }
 
     public var isPaused: Bool {
         get { defaults.bool(forKey: Key.isPaused) }

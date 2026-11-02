@@ -9,8 +9,9 @@ import RepTollShared
 final class AppModel {
     static let shared = AppModel()
 
-    enum Sheet: Identifiable, Equatable {
+    enum Sheet: Identifiable, Hashable {
         case unlock, chooseExercise
+        case paywall(reason: String?)
         var id: Self { self }
     }
 
@@ -46,9 +47,13 @@ final class AppModel {
     var bankMinutes: Int { bankSeconds / 60 }
     var spendableMinutes: Int { Ledger.spendableMinutes(bankSeconds: bankSeconds) }
 
+    /// A selection over the free limit, applied in full if the user subscribes.
+    @ObservationIgnored private var pendingSelection: FamilyActivitySelection?
+
     private init() {
         difficulty = store.difficulty
         refresh()
+        Store.shared.onProActivated = { [weak self] in self?.applyPendingSelection() }
     }
 
     /// Re-syncs with the shared store (extensions may have changed it) and fixes shield drift.
@@ -62,9 +67,24 @@ final class AppModel {
         restrictedCount = store.restrictedCount
     }
 
+    /// Saves the restricted apps. On the free plan, extra items wait behind the paywall:
+    /// the first one is locked now, and the full selection applies if the user subscribes.
     func saveSelection(_ newSelection: FamilyActivitySelection) {
-        store.selection = newSelection
+        let count = SharedStore.count(newSelection)
+        if Store.shared.isPro || Plan.fitsFreePlan(restrictedCount: count) {
+            store.selection = newSelection
+        } else {
+            pendingSelection = newSelection
+            store.selection = SharedStore.trimmedToFreePlan(newSelection)
+            sheet = .paywall(reason: "You picked \(count) apps and categories. The free plan locks 1 — go Pro to lock them all.")
+        }
         refresh()
+    }
+
+    private func applyPendingSelection() {
+        guard let pending = pendingSelection else { return }
+        pendingSelection = nil
+        saveSelection(pending)
     }
 
     func earn(seconds: Int) {

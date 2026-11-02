@@ -339,3 +339,11 @@ struct PoseFactory {
         #expect(Streaks.longest(activeDays: [day(1), day(2), day(5), day(6), day(7)], calendar: calendar) == 3)
     }
 }
+
+@Suite struct PlanTests {
+    @Test func freePlanAllowsOneRestrictedItem() {
+        #expect(Plan.fitsFreePlan(restrictedCount: 0))
+        #expect(Plan.fitsFreePlan(restrictedCount: 1))
+        #expect(!Plan.fitsFreePlan(restrictedCount: 2))
+    }
+}

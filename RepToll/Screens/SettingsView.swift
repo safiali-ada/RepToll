@@ -8,6 +8,8 @@ struct SettingsView: View {
     @State private var showPicker = false
     @State private var draftSelection = FamilyActivitySelection()
     @State private var recordings: [URL] = []
+    @State private var showManageSubscription = false
+    private let store = Store.shared
 
     var body: some View {
         @Bindable var model = model
@@ -21,7 +23,23 @@ struct SettingsView: View {
                         LabeledContent("Restricted apps", value: "\(model.restrictedCount)")
                     }
                 } footer: {
-                    Text("These stay locked until you spend time you've earned.")
+                    Text(store.isPro
+                         ? "These stay locked until you spend time you've earned."
+                         : "The free plan locks 1 app. RepToll Pro locks as many as you like.")
+                }
+
+                Section("RepToll Pro") {
+                    if store.isPro {
+                        LabeledContent("Status", value: "Active")
+                        if let renewal = store.renewalDate {
+                            LabeledContent("Renews", value: renewal.formatted(date: .abbreviated, time: .omitted))
+                        }
+                        Button("Manage subscription") { showManageSubscription = true }
+                    } else {
+                        Button("Unlock RepToll Pro") { model.sheet = .paywall(reason: nil) }
+                            .fontWeight(.semibold)
+                    }
+                    Button("Restore purchases") { Task { await store.restore() } }
                 }
 
                 Section("Workout") {
@@ -73,6 +91,7 @@ struct SettingsView: View {
             }
             .task { await permissions.refresh() }
             .onAppear { recordings = PoseRecorder.recordings() }
+            .manageSubscriptionsSheet(isPresented: $showManageSubscription)
         }
     }
 

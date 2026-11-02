@@ -21,6 +21,7 @@ struct RootView: View {
             switch sheet {
             case .unlock: UnlockSheet()
             case .chooseExercise: ExercisePickerView()
+            case .paywall(let reason): PaywallView(reason: reason)
             }
         }
         .fullScreenCover(item: $model.activeExercise) { exercise in
