@@ -1,0 +1,672 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B20000000000000000000001 /* UnscrollShieldConfig.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000002 /* UnscrollShieldConfig.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B20000000000000000000002 /* UnscrollShieldAction.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000003 /* UnscrollShieldAction.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B20000000000000000000003 /* UnscrollMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000004 /* UnscrollMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B20000000000000000000011 /* UnscrollKit in Frameworks */ = {isa = PBXBuildFile; productRef = B30000000000000000000001 /* UnscrollKit */; };
+		B20000000000000000000012 /* UnscrollShared in Frameworks */ = {isa = PBXBuildFile; productRef = B30000000000000000000002 /* UnscrollShared */; };
+		B20000000000000000000013 /* UnscrollShared in Frameworks */ = {isa = PBXBuildFile; productRef = B30000000000000000000003 /* UnscrollShared */; };
+		B20000000000000000000014 /* UnscrollShared in Frameworks */ = {isa = PBXBuildFile; productRef = B30000000000000000000004 /* UnscrollShared */; };
+		B20000000000000000000015 /* UnscrollShared in Frameworks */ = {isa = PBXBuildFile; productRef = B30000000000000000000005 /* UnscrollShared */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B50000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B90000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD0000000000000000000002;
+			remoteInfo = UnscrollShieldConfig;
+		};
+		B50000000000000000000002 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B90000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD0000000000000000000003;
+			remoteInfo = UnscrollShieldAction;
+		};
+		B50000000000000000000003 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B90000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD0000000000000000000004;
+			remoteInfo = UnscrollMonitor;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B10000000000000000000001 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B20000000000000000000001 /* UnscrollShieldConfig.appex in Embed Foundation Extensions */,
+				B20000000000000000000002 /* UnscrollShieldAction.appex in Embed Foundation Extensions */,
+				B20000000000000000000003 /* UnscrollMonitor.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AA0000000000000000000001 /* Unscroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unscroll.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0000000000000000000002 /* UnscrollShieldConfig.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UnscrollShieldConfig.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0000000000000000000003 /* UnscrollShieldAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UnscrollShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0000000000000000000004 /* UnscrollMonitor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UnscrollMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		AB0000000000000000000001 /* Unscroll */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Unscroll;
+			sourceTree = "<group>";
+		};
+		AB0000000000000000000002 /* UnscrollShieldConfig */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = UnscrollShieldConfig;
+			sourceTree = "<group>";
+		};
+		AB0000000000000000000003 /* UnscrollShieldAction */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = UnscrollShieldAction;
+			sourceTree = "<group>";
+		};
+		AB0000000000000000000004 /* UnscrollMonitor */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = UnscrollMonitor;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AF0000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20000000000000000000011 /* UnscrollKit in Frameworks */,
+				B20000000000000000000012 /* UnscrollShared in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF0000000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20000000000000000000013 /* UnscrollShared in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF0000000000000000000003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20000000000000000000014 /* UnscrollShared in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF0000000000000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20000000000000000000015 /* UnscrollShared in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AC0000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				AB0000000000000000000001 /* Unscroll */,
+				AB0000000000000000000002 /* UnscrollShieldConfig */,
+				AB0000000000000000000003 /* UnscrollShieldAction */,
+				AB0000000000000000000004 /* UnscrollMonitor */,
+				AC0000000000000000000002 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AC0000000000000000000002 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000001,
+				AA0000000000000000000002,
+				AA0000000000000000000003,
+				AA0000000000000000000004,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AD0000000000000000000001 /* Unscroll */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B70000000000000000000002;
+			buildPhases = (
+				AE0000000000000000000001 /* Sources */,
+				AF0000000000000000000001 /* Frameworks */,
+				B00000000000000000000001 /* Resources */,
+				B10000000000000000000001 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B60000000000000000000001 /* PBXTargetDependency */,
+				B60000000000000000000002 /* PBXTargetDependency */,
+				B60000000000000000000003 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AB0000000000000000000001 /* Unscroll */,
+			);
+			name = Unscroll;
+			packageProductDependencies = (
+				B30000000000000000000001 /* UnscrollKit */,
+				B30000000000000000000002 /* UnscrollShared */,
+			);
+			productName = Unscroll;
+			productReference = AA0000000000000000000001;
+			productType = "com.apple.product-type.application";
+		};
+		AD0000000000000000000002 /* UnscrollShieldConfig */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B70000000000000000000003;
+			buildPhases = (
+				AE0000000000000000000002 /* Sources */,
+				AF0000000000000000000002 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AB0000000000000000000002 /* UnscrollShieldConfig */,
+			);
+			name = UnscrollShieldConfig;
+			packageProductDependencies = (
+				B30000000000000000000003 /* UnscrollShared */,
+			);
+			productName = UnscrollShieldConfig;
+			productReference = AA0000000000000000000002;
+			productType = "com.apple.product-type.app-extension";
+		};
+		AD0000000000000000000003 /* UnscrollShieldAction */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B70000000000000000000004;
+			buildPhases = (
+				AE0000000000000000000003 /* Sources */,
+				AF0000000000000000000003 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AB0000000000000000000003 /* UnscrollShieldAction */,
+			);
+			name = UnscrollShieldAction;
+			packageProductDependencies = (
+				B30000000000000000000004 /* UnscrollShared */,
+			);
+			productName = UnscrollShieldAction;
+			productReference = AA0000000000000000000003;
+			productType = "com.apple.product-type.app-extension";
+		};
+		AD0000000000000000000004 /* UnscrollMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B70000000000000000000005;
+			buildPhases = (
+				AE0000000000000000000004 /* Sources */,
+				AF0000000000000000000004 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AB0000000000000000000004 /* UnscrollMonitor */,
+			);
+			name = UnscrollMonitor;
+			packageProductDependencies = (
+				B30000000000000000000005 /* UnscrollShared */,
+			);
+			productName = UnscrollMonitor;
+			productReference = AA0000000000000000000004;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B90000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2700;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					AD0000000000000000000001 = {
+						CreatedOnToolsVersion = 27.2;
+					};
+					AD0000000000000000000002 = {
+						CreatedOnToolsVersion = 27.2;
+					};
+					AD0000000000000000000003 = {
+						CreatedOnToolsVersion = 27.2;
+					};
+					AD0000000000000000000004 = {
+						CreatedOnToolsVersion = 27.2;
+					};
+				};
+			};
+			buildConfigurationList = B70000000000000000000001;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AC0000000000000000000001;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/UnscrollKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = AC0000000000000000000002 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD0000000000000000000001 /* Unscroll */,
+				AD0000000000000000000002 /* UnscrollShieldConfig */,
+				AD0000000000000000000003 /* UnscrollShieldAction */,
+				AD0000000000000000000004 /* UnscrollMonitor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B00000000000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AE0000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE0000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE0000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE0000000000000000000004 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B60000000000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD0000000000000000000002 /* UnscrollShieldConfig */;
+			targetProxy = B50000000000000000000001 /* PBXContainerItemProxy */;
+		};
+		B60000000000000000000002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD0000000000000000000003 /* UnscrollShieldAction */;
+			targetProxy = B50000000000000000000002 /* PBXContainerItemProxy */;
+		};
+		B60000000000000000000003 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD0000000000000000000004 /* UnscrollMonitor */;
+			targetProxy = B50000000000000000000003 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		B80000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = J8G5UT5LRV;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B80000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = J8G5UT5LRV;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				SDKROOT = iphoneos;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B80000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Config/Unscroll.entitlements";
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Unscroll;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Unscroll uses the camera to count your reps. Video never leaves your phone.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.Unscroll;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		B80000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Config/Unscroll.entitlements";
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Unscroll;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Unscroll uses the camera to count your reps. Video never leaves your phone.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.Unscroll;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		B80000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Config/Extension.entitlements";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/UnscrollShieldConfig-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = UnscrollShieldConfig;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.Unscroll.ShieldConfig;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		B80000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Config/Extension.entitlements";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/UnscrollShieldConfig-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = UnscrollShieldConfig;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.Unscroll.ShieldConfig;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		B80000000000000000000007 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Config/Extension.entitlements";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/UnscrollShieldAction-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = UnscrollShieldAction;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.Unscroll.ShieldAction;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		B80000000000000000000008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Config/Extension.entitlements";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/UnscrollShieldAction-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = UnscrollShieldAction;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.Unscroll.ShieldAction;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		B80000000000000000000009 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Config/Extension.entitlements";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/UnscrollMonitor-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = UnscrollMonitor;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.Unscroll.Monitor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		B8000000000000000000000A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Config/Extension.entitlements";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/UnscrollMonitor-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = UnscrollMonitor;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.Unscroll.Monitor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B70000000000000000000001 /* Build configuration list for PBXProject "Unscroll" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B80000000000000000000001 /* Debug */,
+				B80000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B70000000000000000000002 /* Build configuration list for PBXNativeTarget "Unscroll" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B80000000000000000000003 /* Debug */,
+				B80000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B70000000000000000000003 /* Build configuration list for PBXNativeTarget "UnscrollShieldConfig" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B80000000000000000000005 /* Debug */,
+				B80000000000000000000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B70000000000000000000004 /* Build configuration list for PBXNativeTarget "UnscrollShieldAction" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B80000000000000000000007 /* Debug */,
+				B80000000000000000000008 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B70000000000000000000005 /* Build configuration list for PBXNativeTarget "UnscrollMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B80000000000000000000009 /* Debug */,
+				B8000000000000000000000A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/UnscrollKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/UnscrollKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B30000000000000000000001 /* UnscrollKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/UnscrollKit" */;
+			productName = UnscrollKit;
+		};
+		B30000000000000000000002 /* UnscrollShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/UnscrollKit" */;
+			productName = UnscrollShared;
+		};
+		B30000000000000000000003 /* UnscrollShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/UnscrollKit" */;
+			productName = UnscrollShared;
+		};
+		B30000000000000000000004 /* UnscrollShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/UnscrollKit" */;
+			productName = UnscrollShared;
+		};
+		B30000000000000000000005 /* UnscrollShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/UnscrollKit" */;
+			productName = UnscrollShared;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = B90000000000000000000001 /* Project object */;
+}

@@ -1,0 +1,6 @@
+*.apk
+build/
+DerivedData/
+xcuserdata/
+.DS_Store
+Packages/UnscrollKit/.build/
