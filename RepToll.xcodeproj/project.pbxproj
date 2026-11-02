@@ -1,0 +1,726 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B20000000000000000000001 /* RepTollShieldConfig.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000002 /* RepTollShieldConfig.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B20000000000000000000002 /* RepTollShieldAction.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000003 /* RepTollShieldAction.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B20000000000000000000003 /* RepTollMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AA0000000000000000000004 /* RepTollMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B20000000000000000000011 /* RepTollKit in Frameworks */ = {isa = PBXBuildFile; productRef = B30000000000000000000001 /* RepTollKit */; };
+		B20000000000000000000012 /* RepTollShared in Frameworks */ = {isa = PBXBuildFile; productRef = B30000000000000000000002 /* RepTollShared */; };
+		B20000000000000000000013 /* RepTollShared in Frameworks */ = {isa = PBXBuildFile; productRef = B30000000000000000000003 /* RepTollShared */; };
+		B20000000000000000000014 /* RepTollShared in Frameworks */ = {isa = PBXBuildFile; productRef = B30000000000000000000004 /* RepTollShared */; };
+		B20000000000000000000015 /* RepTollShared in Frameworks */ = {isa = PBXBuildFile; productRef = B30000000000000000000005 /* RepTollShared */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B50000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B90000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD0000000000000000000002;
+			remoteInfo = RepTollShieldConfig;
+		};
+		B50000000000000000000002 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B90000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD0000000000000000000003;
+			remoteInfo = RepTollShieldAction;
+		};
+		B50000000000000000000003 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B90000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD0000000000000000000004;
+			remoteInfo = RepTollMonitor;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B10000000000000000000001 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B20000000000000000000001 /* RepTollShieldConfig.appex in Embed Foundation Extensions */,
+				B20000000000000000000002 /* RepTollShieldAction.appex in Embed Foundation Extensions */,
+				B20000000000000000000003 /* RepTollMonitor.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AA0000000000000000000001 /* RepToll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RepToll.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0000000000000000000002 /* RepTollShieldConfig.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RepTollShieldConfig.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0000000000000000000003 /* RepTollShieldAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RepTollShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA0000000000000000000004 /* RepTollMonitor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RepTollMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		AB0000000000000000000001 /* RepToll */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RepToll;
+			sourceTree = "<group>";
+		};
+		AB0000000000000000000002 /* RepTollShieldConfig */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RepTollShieldConfig;
+			sourceTree = "<group>";
+		};
+		AB0000000000000000000003 /* RepTollShieldAction */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RepTollShieldAction;
+			sourceTree = "<group>";
+		};
+		AB0000000000000000000004 /* RepTollMonitor */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RepTollMonitor;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AF0000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20000000000000000000011 /* RepTollKit in Frameworks */,
+				B20000000000000000000012 /* RepTollShared in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF0000000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20000000000000000000013 /* RepTollShared in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF0000000000000000000003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20000000000000000000014 /* RepTollShared in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF0000000000000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B20000000000000000000015 /* RepTollShared in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AC0000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				AB0000000000000000000001 /* RepToll */,
+				AB0000000000000000000002 /* RepTollShieldConfig */,
+				AB0000000000000000000003 /* RepTollShieldAction */,
+				AB0000000000000000000004 /* RepTollMonitor */,
+				AC0000000000000000000002 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AC0000000000000000000002 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000001 /* RepToll.app */,
+				AA0000000000000000000002 /* RepTollShieldConfig.appex */,
+				AA0000000000000000000003 /* RepTollShieldAction.appex */,
+				AA0000000000000000000004 /* RepTollMonitor.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AD0000000000000000000001 /* RepToll */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B70000000000000000000002 /* Build configuration list for PBXNativeTarget "RepToll" */;
+			buildPhases = (
+				AE0000000000000000000001 /* Sources */,
+				AF0000000000000000000001 /* Frameworks */,
+				B00000000000000000000001 /* Resources */,
+				B10000000000000000000001 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B60000000000000000000001 /* PBXTargetDependency */,
+				B60000000000000000000002 /* PBXTargetDependency */,
+				B60000000000000000000003 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AB0000000000000000000001 /* RepToll */,
+			);
+			name = RepToll;
+			packageProductDependencies = (
+				B30000000000000000000001 /* RepTollKit */,
+				B30000000000000000000002 /* RepTollShared */,
+			);
+			productName = RepToll;
+			productReference = AA0000000000000000000001 /* RepToll.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AD0000000000000000000002 /* RepTollShieldConfig */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B70000000000000000000003 /* Build configuration list for PBXNativeTarget "RepTollShieldConfig" */;
+			buildPhases = (
+				AE0000000000000000000002 /* Sources */,
+				AF0000000000000000000002 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AB0000000000000000000002 /* RepTollShieldConfig */,
+			);
+			name = RepTollShieldConfig;
+			packageProductDependencies = (
+				B30000000000000000000003 /* RepTollShared */,
+			);
+			productName = RepTollShieldConfig;
+			productReference = AA0000000000000000000002 /* RepTollShieldConfig.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		AD0000000000000000000003 /* RepTollShieldAction */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B70000000000000000000004 /* Build configuration list for PBXNativeTarget "RepTollShieldAction" */;
+			buildPhases = (
+				AE0000000000000000000003 /* Sources */,
+				AF0000000000000000000003 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AB0000000000000000000003 /* RepTollShieldAction */,
+			);
+			name = RepTollShieldAction;
+			packageProductDependencies = (
+				B30000000000000000000004 /* RepTollShared */,
+			);
+			productName = RepTollShieldAction;
+			productReference = AA0000000000000000000003 /* RepTollShieldAction.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		AD0000000000000000000004 /* RepTollMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B70000000000000000000005 /* Build configuration list for PBXNativeTarget "RepTollMonitor" */;
+			buildPhases = (
+				AE0000000000000000000004 /* Sources */,
+				AF0000000000000000000004 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AB0000000000000000000004 /* RepTollMonitor */,
+			);
+			name = RepTollMonitor;
+			packageProductDependencies = (
+				B30000000000000000000005 /* RepTollShared */,
+			);
+			productName = RepTollMonitor;
+			productReference = AA0000000000000000000004 /* RepTollMonitor.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B90000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2700;
+				LastUpgradeCheck = 2720;
+				TargetAttributes = {
+					AD0000000000000000000001 = {
+						CreatedOnToolsVersion = 27.2;
+					};
+					AD0000000000000000000002 = {
+						CreatedOnToolsVersion = 27.2;
+					};
+					AD0000000000000000000003 = {
+						CreatedOnToolsVersion = 27.2;
+					};
+					AD0000000000000000000004 = {
+						CreatedOnToolsVersion = 27.2;
+					};
+				};
+			};
+			buildConfigurationList = B70000000000000000000001 /* Build configuration list for PBXProject "RepToll" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AC0000000000000000000001;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/RepTollKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = AC0000000000000000000002 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD0000000000000000000001 /* RepToll */,
+				AD0000000000000000000002 /* RepTollShieldConfig */,
+				AD0000000000000000000003 /* RepTollShieldAction */,
+				AD0000000000000000000004 /* RepTollMonitor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B00000000000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AE0000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE0000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE0000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE0000000000000000000004 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B60000000000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD0000000000000000000002 /* RepTollShieldConfig */;
+			targetProxy = B50000000000000000000001 /* PBXContainerItemProxy */;
+		};
+		B60000000000000000000002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD0000000000000000000003 /* RepTollShieldAction */;
+			targetProxy = B50000000000000000000002 /* PBXContainerItemProxy */;
+		};
+		B60000000000000000000003 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD0000000000000000000004 /* RepTollMonitor */;
+			targetProxy = B50000000000000000000003 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		B80000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = J8G5UT5LRV;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B80000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = J8G5UT5LRV;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B80000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/RepToll.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J8G5UT5LRV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = RepToll;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSCameraUsageDescription = "RepToll uses the camera to count your reps. Video never leaves your phone.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.RepToll;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		B80000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/RepToll.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J8G5UT5LRV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = RepToll;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSCameraUsageDescription = "RepToll uses the camera to count your reps. Video never leaves your phone.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.RepToll;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		B80000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/Extension.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/RepTollShieldConfig-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = RepTollShieldConfig;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.RepToll.ShieldConfig;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		B80000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/Extension.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/RepTollShieldConfig-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = RepTollShieldConfig;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.RepToll.ShieldConfig;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		B80000000000000000000007 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/Extension.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/RepTollShieldAction-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = RepTollShieldAction;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.RepToll.ShieldAction;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		B80000000000000000000008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/Extension.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/RepTollShieldAction-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = RepTollShieldAction;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.RepToll.ShieldAction;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		B80000000000000000000009 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/Extension.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/RepTollMonitor-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = RepTollMonitor;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.RepToll.Monitor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		B8000000000000000000000A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/Extension.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/RepTollMonitor-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = RepTollMonitor;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.syedsafiali.RepToll.Monitor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B70000000000000000000001 /* Build configuration list for PBXProject "RepToll" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B80000000000000000000001 /* Debug */,
+				B80000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B70000000000000000000002 /* Build configuration list for PBXNativeTarget "RepToll" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B80000000000000000000003 /* Debug */,
+				B80000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B70000000000000000000003 /* Build configuration list for PBXNativeTarget "RepTollShieldConfig" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B80000000000000000000005 /* Debug */,
+				B80000000000000000000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B70000000000000000000004 /* Build configuration list for PBXNativeTarget "RepTollShieldAction" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B80000000000000000000007 /* Debug */,
+				B80000000000000000000008 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B70000000000000000000005 /* Build configuration list for PBXNativeTarget "RepTollMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B80000000000000000000009 /* Debug */,
+				B8000000000000000000000A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/RepTollKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/RepTollKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B30000000000000000000001 /* RepTollKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/RepTollKit" */;
+			productName = RepTollKit;
+		};
+		B30000000000000000000002 /* RepTollShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/RepTollKit" */;
+			productName = RepTollShared;
+		};
+		B30000000000000000000003 /* RepTollShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/RepTollKit" */;
+			productName = RepTollShared;
+		};
+		B30000000000000000000004 /* RepTollShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/RepTollKit" */;
+			productName = RepTollShared;
+		};
+		B30000000000000000000005 /* RepTollShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B40000000000000000000001 /* XCLocalSwiftPackageReference "Packages/RepTollKit" */;
+			productName = RepTollShared;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = B90000000000000000000001 /* Project object */;
+}
