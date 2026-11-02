@@ -13,6 +13,6 @@ let package = Package(
         .target(name: "RepTollKit"),
         // iOS Screen Time glue shared by the app and its extensions.
         .target(name: "RepTollShared", dependencies: ["RepTollKit"]),
-        .testTarget(name: "RepTollKitTests", dependencies: ["RepTollKit"]),
+        .testTarget(name: "RepTollKitTests", dependencies: ["RepTollKit"], resources: [.copy("Fixtures")]),
     ]
 )

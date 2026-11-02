@@ -74,145 +74,169 @@ struct PoseFactory {
     }
 }
 
+/// Push-ups seen by a phone on the floor facing the user, at the ~16 fps the camera actually delivers.
 @Suite struct PushupTests {
-    /// Front view from a phone on the floor, in push-up position.
-    static let plankImage: [Joint: SIMD2<Double>] = [
-        .leftShoulder: [0.4, 0.3], .rightShoulder: [0.6, 0.3],
-        .leftElbow: [0.38, 0.45], .rightElbow: [0.62, 0.45],
-        .leftWrist: [0.38, 0.6], .rightWrist: [0.62, 0.6],
-        .leftHip: [0.45, 0.42], .rightHip: [0.55, 0.42],
-        .leftKnee: [0.45, 0.48], .rightKnee: [0.55, 0.48],
-    ]
-    /// Standing upright with arms in front of the body.
-    static let standingImage: [Joint: SIMD2<Double>] = [
-        .leftShoulder: [0.4, 0.3], .rightShoulder: [0.6, 0.3],
-        .leftElbow: [0.38, 0.42], .rightElbow: [0.62, 0.42],
-        .leftWrist: [0.4, 0.5], .rightWrist: [0.6, 0.5],
-        .leftHip: [0.45, 0.55], .rightHip: [0.55, 0.55],
-        .leftKnee: [0.45, 0.75], .rightKnee: [0.55, 0.75],
-    ]
+    static let dt = 1.0 / 16
+    var t = 0.0
 
-    func frame(_ f: inout PoseFactory, elbow: Double, right: Double? = nil,
-               image: [Joint: SIMD2<Double>] = plankImage, handShift: Double = 0) -> PoseFrame {
-        var frame = f.next(PoseFactory.pushup(elbow: elbow, rightElbow: right))
-        for (joint, var p) in image {
-            if joint == .leftWrist || joint == .rightWrist { p.x += handShift }
-            if frame.points[joint] == nil {
-                frame.points[joint] = PosePoint(position: .zero, confidence: 0.9)
-            }
-            frame.points[joint]?.image = p
+    /// `depth` 1 = top, 0.5 = chest near the floor. Hands planted at y 0.7, shoulders 0.2 apart.
+    func plank(depth: Double, handShift: Double = 0, wrists: Bool = true) -> [Joint: PosePoint] {
+        let shoulderY = 0.7 - 0.4 * depth
+        var image: [Joint: SIMD2<Double>] = [
+            .leftShoulder: [0.4, shoulderY], .rightShoulder: [0.6, shoulderY],
+            .leftHip: [0.45, shoulderY + 0.12], .rightHip: [0.55, shoulderY + 0.12],
+            .leftKnee: [0.45, shoulderY + 0.18], .rightKnee: [0.55, shoulderY + 0.18],
+        ]
+        if wrists {
+            image[.leftWrist] = [0.38 + handShift, 0.7]
+            image[.rightWrist] = [0.62 + handShift, 0.7]
         }
-        return frame
+        return image.mapValues { PosePoint(position: .zero, image: $0, confidence: 0.9) }
     }
 
-    func run(_ d: inout PushupDetector, _ f: inout PoseFactory, elbow: Double, frames: Int = 15, right: Double? = nil,
-             image: [Joint: SIMD2<Double>] = plankImage, handShift: Double = 0) {
-        for _ in 0..<frames { _ = d.process(frame(&f, elbow: elbow, right: right, image: image, handShift: handShift)) }
+    /// Standing upright; `curl` 1 = arms hanging, 0 = hands at the shoulders.
+    func standing(curl: Double) -> [Joint: PosePoint] {
+        let image: [Joint: SIMD2<Double>] = [
+            .leftShoulder: [0.4, 0.3], .rightShoulder: [0.6, 0.3],
+            .leftWrist: [0.4, 0.3 + 0.35 * curl], .rightWrist: [0.6, 0.3 + 0.35 * curl],
+            .leftHip: [0.45, 0.55], .rightHip: [0.55, 0.55],
+            .leftKnee: [0.45, 0.75], .rightKnee: [0.55, 0.75],
+        ]
+        return image.mapValues { PosePoint(position: .zero, image: $0, confidence: 0.9) }
     }
 
-    /// Hold the top position long enough to arm counting.
-    func getReady(_ d: inout PushupDetector, _ f: inout PoseFactory) { run(&d, &f, elbow: 170, frames: 45) }
+    @discardableResult
+    mutating func feed(_ d: inout PushupDetector, _ points: [Joint: PosePoint], frames: Int) -> DetectionEvent {
+        var last = DetectionEvent.tracking
+        for _ in 0..<frames {
+            last = d.process(PoseFrame(timestamp: t, processingTime: 0.06, points: points))
+            t += Self.dt
+        }
+        return last
+    }
 
-    @Test func countsFullReps() {
-        var d = PushupDetector(), f = PoseFactory()
-        getReady(&d, &f)
+    mutating func getReady(_ d: inout PushupDetector) { feed(&d, plank(depth: 1), frames: 24) }
+
+    mutating func rep(_ d: inout PushupDetector, depth: Double = 0.5, frames: Int = 6) {
+        feed(&d, plank(depth: depth), frames: frames)
+        feed(&d, plank(depth: 1), frames: frames)
+    }
+
+    @Test mutating func countsFullReps() {
+        var d = PushupDetector()
+        getReady(&d)
+        for _ in 0..<3 { rep(&d) }
+        #expect(d.count == 3)
+    }
+
+    @Test mutating func countsFastReps() {
+        var d = PushupDetector()
+        getReady(&d)
+        // About 0.4 s per rep: two frames down, two up.
+        for _ in 0..<5 { rep(&d, frames: 2) }
+        #expect(d.count == 5)
+    }
+
+    @Test mutating func countsDeepRepsWhereTheBodyDropsOutOfView() {
+        var d = PushupDetector()
+        getReady(&d)
         for _ in 0..<3 {
-            run(&d, &f, elbow: 80)
-            run(&d, &f, elbow: 170)
+            feed(&d, plank(depth: 0.85), frames: 2)
+            feed(&d, [:], frames: 5)
+            feed(&d, plank(depth: 1), frames: 6)
         }
         #expect(d.count == 3)
     }
 
-    @Test func nothingCountsBeforeHoldingTheTopPosition() {
-        var d = PushupDetector(), f = PoseFactory()
-        // Bouncing straight away, like reaching for the phone during setup.
-        for _ in 0..<3 {
-            run(&d, &f, elbow: 80, frames: 8)
-            run(&d, &f, elbow: 170, frames: 8)
-        }
-        #expect(d.count == 0)
-        let event = d.process(frame(&f, elbow: 170))
-        #expect(event == .getReady(.holdStart))
-    }
-
-    @Test func standingArmBendsDontCount() {
-        var d = PushupDetector(), f = PoseFactory()
-        run(&d, &f, elbow: 170, frames: 45, image: Self.standingImage)
-        for _ in 0..<3 {
-            run(&d, &f, elbow: 70, image: Self.standingImage)
-            run(&d, &f, elbow: 170, image: Self.standingImage)
-        }
-        #expect(d.count == 0)
-        #expect(d.process(frame(&f, elbow: 170, image: Self.standingImage)) == .getReady(.getDown))
-    }
-
-    @Test func handsAboveShouldersAreNotAPushup() {
-        var d = PushupDetector(), f = PoseFactory()
-        var raised = Self.plankImage
-        raised[.leftWrist] = [0.38, 0.25]
-        raised[.rightWrist] = [0.62, 0.25]
-        #expect(d.process(frame(&f, elbow: 170, image: raised)) == .getReady(.handsOnFloor))
-    }
-
-    @Test func movingHandsVoidTheRep() {
-        var d = PushupDetector(), f = PoseFactory()
-        getReady(&d, &f)
-        run(&d, &f, elbow: 80)
-        run(&d, &f, elbow: 80, frames: 5, handShift: 0.15)
-        run(&d, &f, elbow: 170)
-        #expect(d.count == 0)
-        // The next clean rep still counts.
-        run(&d, &f, elbow: 80)
-        run(&d, &f, elbow: 170)
+    @Test mutating func countsWhenWristsVanishAtTheBottom() {
+        var d = PushupDetector()
+        getReady(&d)
+        feed(&d, plank(depth: 0.5, wrists: false), frames: 6)
+        feed(&d, plank(depth: 1), frames: 6)
         #expect(d.count == 1)
     }
 
-    @Test func leavingPositionRequiresGettingReadyAgain() {
-        var d = PushupDetector(), f = PoseFactory()
-        getReady(&d, &f)
-        run(&d, &f, elbow: 170, frames: 60, image: Self.standingImage)
-        run(&d, &f, elbow: 80)
-        run(&d, &f, elbow: 170)
+    @Test mutating func halfRepsDontCount() {
+        var d = PushupDetector()
+        getReady(&d)
+        for _ in 0..<3 { rep(&d, depth: 0.85) }
         #expect(d.count == 0)
     }
 
-    @Test func singleNoisyFramesAreIgnored() {
-        var d = PushupDetector(), f = PoseFactory()
-        getReady(&d, &f)
-        for _ in 0..<5 {
-            run(&d, &f, elbow: 80, frames: 1)
-            run(&d, &f, elbow: 170, frames: 3)
+    @Test mutating func leavingTheFrameFromTheTopIsNotARep() {
+        var d = PushupDetector()
+        getReady(&d)
+        feed(&d, [:], frames: 10)
+        feed(&d, plank(depth: 1), frames: 6)
+        #expect(d.count == 0)
+    }
+
+    @Test mutating func nothingCountsBeforeHoldingStill() {
+        var d = PushupDetector()
+        // Bobbing up and down while getting set up never holds still long enough to arm.
+        for _ in 0..<4 { rep(&d, frames: 4) }
+        #expect(d.count == 0)
+        #expect(feed(&d, plank(depth: 1), frames: 1) == .getReady(.holdStart))
+    }
+
+    @Test mutating func standingArmCurlsDontCount() {
+        var d = PushupDetector()
+        feed(&d, standing(curl: 1), frames: 24)
+        for _ in 0..<3 {
+            feed(&d, standing(curl: 0.2), frames: 6)
+            feed(&d, standing(curl: 1), frames: 6)
         }
         #expect(d.count == 0)
+        #expect(feed(&d, standing(curl: 1), frames: 1) == .getReady(.getDown))
     }
 
-    @Test func lopsidedArmsDontCount() {
-        var d = PushupDetector(), f = PoseFactory()
-        getReady(&d, &f)
-        run(&d, &f, elbow: 80, right: 160)
-        run(&d, &f, elbow: 170)
+    @Test mutating func handsAboveShouldersCantStart() {
+        var d = PushupDetector()
+        var raised = plank(depth: 1)
+        raised[.leftWrist]?.image = [0.38, 0.2]
+        raised[.rightWrist]?.image = [0.62, 0.2]
+        #expect(feed(&d, raised, frames: 1) == .getReady(.handsOnFloor))
+    }
+
+    @Test mutating func movingHandsVoidTheRep() {
+        var d = PushupDetector()
+        getReady(&d)
+        feed(&d, plank(depth: 0.5), frames: 4)
+        feed(&d, plank(depth: 0.5, handShift: 0.15), frames: 2)
+        feed(&d, plank(depth: 1), frames: 6)
+        #expect(d.count == 0)
+        rep(&d)
+        #expect(d.count == 1)
+    }
+
+    @Test mutating func standingUpRequiresGettingReadyAgain() {
+        var d = PushupDetector()
+        getReady(&d)
+        feed(&d, standing(curl: 1), frames: 40)
+        rep(&d)
         #expect(d.count == 0)
     }
+}
 
-    @Test func lowConfidenceReportsNotInFrame() {
-        var d = PushupDetector(), f = PoseFactory()
-        var weak = frame(&f, elbow: 170)
-        for key in weak.points.keys { weak.points[key]?.confidence = 0.1 }
-        guard case .notInFrame(let joints) = d.process(weak) else { Issue.record("expected notInFrame"); return }
-        #expect(joints.contains(.leftWrist))
+/// Replays real recorded sessions (Settings → Tuning → Record pose data).
+@Suite struct RecordedSessionTests {
+    struct Recording: Decodable {
+        var exercise: Exercise
+        var frames: [PoseFrame]
     }
 
-    @Test func slowFramesAreSkipped() {
-        var d = PushupDetector(), f = PoseFactory()
-        func slow(_ elbow: Double, _ n: Int = 15) {
-            for _ in 0..<n {
-                var fr = frame(&f, elbow: elbow)
-                fr.processingTime = 0.2
-                _ = d.process(fr)
-            }
-        }
-        slow(170, 45); slow(80); slow(170)
-        #expect(d.count == 0)
+    func load(_ name: String) throws -> Recording {
+        let url = try #require(Bundle.module.url(forResource: name, withExtension: "json", subdirectory: "Fixtures"))
+        return try JSONDecoder().decode(Recording.self, from: Data(contentsOf: url))
+    }
+
+    /// Phone on the floor facing the user, fast and deep reps, ~16 fps. Counted by hand from the
+    /// shoulder track and the screen recording: 13 reps, then standing up.
+    @Test func frontViewSessionCountsThirteen() throws {
+        let recording = try load("pushups-front-13-reps")
+        var detector = PushupDetector()
+        for frame in recording.frames { _ = detector.process(frame) }
+        #expect(detector.count == 13)
     }
 }
 

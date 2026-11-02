@@ -26,7 +26,7 @@ public enum Exercise: String, CaseIterable, Sendable, Codable, Identifiable {
 
     public var setupTip: String {
         switch self {
-        case .pushups: "Phone on the floor, facing you, about 1.5 m away. Keep your shoulders, arms and hips in view."
+        case .pushups: "Phone on the floor facing you, about 1.5 m away, so your shoulders and hands are in view. Go as deep as you like."
         case .squats: "Stand the phone up 2–3 m away so your whole body is in frame, hips to ankles."
         case .plank: "Phone on the floor facing you. Hold a forearm or straight-arm plank with your body straight."
         }

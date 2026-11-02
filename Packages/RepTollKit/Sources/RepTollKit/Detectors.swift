@@ -87,104 +87,164 @@ struct PhaseTracker: Sendable {
     }
 }
 
-/// Elbow angle (shoulder–elbow–wrist), averaged over both arms. Up ≥ 148°, down 35–148°.
-/// Only counts while the body is in a push-up position:
-/// - wrists clearly below the shoulders in the image (hands on the floor);
-/// - legs not hanging below the hips like when standing or sitting;
-/// - hands planted: a rep is thrown out if the hands moved during it.
+/// Counts push-ups by how far the shoulders travel toward the planted hands in the camera image.
+///
+/// Tuned on a real session with the phone on the floor facing the user. There, the 3D elbow
+/// angle barely moved (about 150° at the top, 125° at the bottom) and arms often vanished at the
+/// bottom, while the shoulder-to-hand gap shrank from ~1.7 to ~0.6 shoulder-widths every rep.
+///
+/// - Arming: shoulders and hands steady in a push-up position for `armDuration`; the
+///   shoulder-to-hand gap measured there is the reference "top" (followed slowly afterwards).
+/// - Down: the gap shrinks to `downRatio` of the top. If the body drops out of view right
+///   after descending (face too close to the camera), that also counts as down.
+/// - Rep: back up to `upRatio`, with the hands still where they started.
+/// - Standing or sitting (knees far below hips) disarms after a grace period.
 public struct PushupDetector: ExerciseDetector {
     public let exercise = Exercise.pushups
     public let thresholds: DetectionThresholds
-    static let upRange = 148.0...200.0
-    static let downRange = 35.0..<148.0
-    static let required: Set<Joint> = [.leftShoulder, .rightShoulder, .leftElbow, .rightElbow, .leftWrist, .rightWrist]
-    /// Wrists must sit this many shoulder-widths below the shoulders.
+    static let downRatio = 0.75
+    static let upRatio = 0.9
+    static let armDuration: TimeInterval = 1.0
+    /// While arming, shoulders and hands may wobble at most this many shoulder-widths.
+    static let maxWobble = 0.25
+    /// Wrists must sit this many shoulder-widths below the shoulders to start.
     static let minHandDrop = 0.5
     /// Knees more than this many shoulder-widths below the hips means standing/sitting upright.
     static let maxLegDrop = 0.9
     /// Hands may move at most this many shoulder-widths during a rep.
     static let maxHandDrift = 0.5
-    /// Being out of position longer than this requires holding the start position again.
+    /// A body that disappears within this time of descending is treated as at the bottom.
+    static let vanishWindow: TimeInterval = 0.6
+    /// Out of view or out of position longer than this requires arming again.
+    static let lostTimeout: TimeInterval = 3.0
     static let outOfPositionGrace: TimeInterval = 1.5
+    static let shoulders: Set<Joint> = [.leftShoulder, .rightShoulder]
+    static let wrists: Set<Joint> = [.leftWrist, .rightWrist]
+
+    private struct ArmSample { var time: TimeInterval; var shoulderY: Double; var hands: SIMD2<Double>; var gap: Double }
 
     public private(set) var count = 0
-    private var tracker = PhaseTracker()
-    private var handAnchor: SIMD2<Double>?
+    private var isArmed = false
+    private var armWindow: [ArmSample] = []
+    private var topGap = 0.0
+    /// Where the hands are planted (smoothed), so reps still track when wrists drop out at the bottom.
+    private var hands: SIMD2<Double>?
+    private var isDown = false
     private var handsMoved = false
-    private var lastInPosition: TimeInterval?
+    private var lastSeen: TimeInterval?
+    private var lastRatio: Double?
+    private var outOfPositionSince: TimeInterval?
 
     public init(thresholds: DetectionThresholds = .default) { self.thresholds = thresholds }
 
     public mutating func process(_ frame: PoseFrame) -> DetectionEvent {
         let conf = thresholds.minConfidence
-        let weak = frame.weakJoints(Self.required, minConfidence: conf)
-        guard weak.isEmpty,
-              let leftShoulder = frame.image(.leftShoulder, minConfidence: conf),
-              let rightShoulder = frame.image(.rightShoulder, minConfidence: conf),
-              let leftWrist = frame.image(.leftWrist, minConfidence: conf),
-              let rightWrist = frame.image(.rightWrist, minConfidence: conf)
-        else { return .notInFrame(weak.isEmpty ? Self.required : weak) }
+        let t = frame.timestamp
+        guard let leftShoulder = frame.image(.leftShoulder, minConfidence: conf),
+              let rightShoulder = frame.image(.rightShoulder, minConfidence: conf)
+        else { return bodyLost(at: t) }
 
         let scale = Geometry.distance(leftShoulder, rightShoulder)
-        guard scale > 0.02 else { return .notInFrame([.leftShoulder, .rightShoulder]) }
+        guard scale > 0.02 else { return bodyLost(at: t) }
+        let shoulderY = (leftShoulder.y + rightShoulder.y) / 2
+        let wrists = frame.imageMidpoint(.leftWrist, .rightWrist, minConfidence: conf)
 
-        if let hint = positionProblem(frame, leftShoulder, rightShoulder, leftWrist, rightWrist, scale: scale) {
-            if let last = lastInPosition, frame.timestamp - last > Self.outOfPositionGrace { reset() }
-            return .getReady(hint)
+        if legsLookUpright(frame, scale: scale) {
+            outOfPositionSince = outOfPositionSince ?? t
+            if t - (outOfPositionSince ?? t) > Self.outOfPositionGrace { reset() }
+            armWindow.removeAll()
+            return .getReady(.getDown)
         }
-        lastInPosition = frame.timestamp
+        outOfPositionSince = nil
 
-        guard let left = Geometry.angle(frame, .leftShoulder, .leftElbow, .leftWrist),
-              let right = Geometry.angle(frame, .rightShoulder, .rightElbow, .rightWrist)
-        else { return .notInFrame([.leftElbow, .rightElbow]) }
+        guard isArmed else { return arm(frame, shoulderY: shoulderY, wrists: wrists, scale: scale) }
 
-        let elbow = (left + right) / 2
-        var phase = Phase.unknown
-        if abs(left - right) <= thresholds.maxAsymmetry {
-            if Self.upRange.contains(elbow) { phase = .up }
-            else if Self.downRange.contains(elbow) { phase = .down }
+        if let wrists {
+            if !isDown { hands = hands.map { $0 * 0.8 + wrists * 0.2 } ?? wrists }
+            if let planted = hands, Geometry.distance(wrists, planted) > Self.maxHandDrift * scale { handsMoved = true }
         }
+        guard let planted = hands, topGap > 0 else { return .notInFrame(Self.wrists) }
 
-        let hands = (leftWrist + rightWrist) / 2
-        if let anchor = handAnchor, Geometry.distance(hands, anchor) > Self.maxHandDrift * scale { handsMoved = true }
+        let gap = planted.y - shoulderY
+        let ratio = gap / topGap
+        lastSeen = t
+        lastRatio = ratio
 
-        switch tracker.feed(phase, frame: frame) {
-        case .enteredDown:
-            handAnchor = hands
+        if !isDown && ratio <= Self.downRatio {
+            isDown = true
             handsMoved = false
-        case .completedRep:
-            defer { handAnchor = nil }
-            guard !handsMoved else { return .badForm([.leftWrist, .rightWrist]) }
+        } else if isDown && ratio >= Self.upRatio {
+            isDown = false
+            if handsMoved { return .badForm(Self.wrists) }
             count += 1
             return .counted(total: count)
-        case .none:
-            break
         }
-
-        if !tracker.isArmed { return .getReady(.holdStart) }
-        return phase == .unknown ? .badForm([.leftElbow, .rightElbow, .leftWrist, .rightWrist]) : .tracking
+        if !isDown && ratio >= Self.upRatio { topGap = topGap * 0.9 + gap * 0.1 }
+        return .tracking
     }
 
-    private func positionProblem(_ frame: PoseFrame, _ leftShoulder: SIMD2<Double>, _ rightShoulder: SIMD2<Double>,
-                                 _ leftWrist: SIMD2<Double>, _ rightWrist: SIMD2<Double>, scale: Double) -> PositionHint? {
-        // Image y grows downward.
-        let minDrop = Self.minHandDrop * scale
-        guard leftWrist.y - leftShoulder.y > minDrop, rightWrist.y - rightShoulder.y > minDrop else { return .handsOnFloor }
-
-        let conf = thresholds.minConfidence
-        if let hips = frame.imageMidpoint(.leftHip, .rightHip, minConfidence: conf),
-           let knees = frame.imageMidpoint(.leftKnee, .rightKnee, minConfidence: conf),
-           knees.y - hips.y > Self.maxLegDrop * scale {
-            return .getDown
+    private mutating func arm(_ frame: PoseFrame, shoulderY: Double, wrists: SIMD2<Double>?, scale: Double) -> DetectionEvent {
+        guard let wrists else {
+            armWindow.removeAll()
+            return .notInFrame(Self.wrists)
         }
-        return nil
+        let gap = wrists.y - shoulderY
+        guard gap > Self.minHandDrop * scale else {
+            armWindow.removeAll()
+            return .getReady(.handsOnFloor)
+        }
+
+        let t = frame.timestamp
+        armWindow.append(ArmSample(time: t, shoulderY: shoulderY, hands: wrists, gap: gap))
+        armWindow.removeAll { t - $0.time > Self.armDuration }
+        let shoulderYs = armWindow.map(\.shoulderY), handYs = armWindow.map(\.hands.y)
+        let wobble = max((shoulderYs.max() ?? 0) - (shoulderYs.min() ?? 0), (handYs.max() ?? 0) - (handYs.min() ?? 0))
+        if wobble > Self.maxWobble * scale {
+            armWindow = [armWindow[armWindow.count - 1]]
+        } else if let first = armWindow.first, t - first.time >= Self.armDuration * 0.95 {
+            let gaps = armWindow.map(\.gap).sorted()
+            topGap = gaps[gaps.count / 2]
+            hands = wrists
+            isArmed = true
+            isDown = false
+            lastSeen = t
+            lastRatio = 1
+            armWindow.removeAll()
+            return .tracking
+        }
+        return .getReady(.holdStart)
+    }
+
+    /// No shoulders this frame. Right after descending this is the bottom of a deep rep.
+    private mutating func bodyLost(at t: TimeInterval) -> DetectionEvent {
+        armWindow.removeAll()
+        if isArmed, let seen = lastSeen {
+            if !isDown, let ratio = lastRatio, ratio < Self.upRatio, t - seen <= Self.vanishWindow {
+                isDown = true
+                handsMoved = false
+            } else if t - seen > Self.lostTimeout {
+                reset()
+            }
+        }
+        return .notInFrame(Self.shoulders)
+    }
+
+    private func legsLookUpright(_ frame: PoseFrame, scale: Double) -> Bool {
+        let conf = thresholds.minConfidence
+        guard let hips = frame.imageMidpoint(.leftHip, .rightHip, minConfidence: conf),
+              let knees = frame.imageMidpoint(.leftKnee, .rightKnee, minConfidence: conf) else { return false }
+        return knees.y - hips.y > Self.maxLegDrop * scale
     }
 
     private mutating func reset() {
-        tracker.disarm()
-        handAnchor = nil
+        isArmed = false
+        armWindow.removeAll()
+        hands = nil
+        isDown = false
         handsMoved = false
-        lastInPosition = nil
+        lastSeen = nil
+        lastRatio = nil
+        outOfPositionSince = nil
     }
 }
 

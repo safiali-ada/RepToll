@@ -50,6 +50,9 @@ Sessions are capped at 60 minutes to keep the number of events reasonable.
 ### Code structure
 Putting everything in the app target is simpler, but then detectors can only be tested through Xcode on a simulator. The package split costs one local package reference and gives fast, camera-free tests.
 
+### Update (2026-11-02): push-up counting
+A recorded device session (phone on the floor, facing the user, ~16 fps) showed that the 3D elbow angle barely changes in that view (~150° top, ~125° bottom), and the arms often drop out of view at the bottom of deep reps. Push-ups are now counted by how far the shoulders travel toward the planted hands in the 2D image, relative to the user's own top position, with arming, hand-drift and standing checks. The recording is a regression fixture (`Tests/RepTollKitTests/Fixtures`). Squats and plank still use 3D joint angles and haven't been checked on a device yet.
+
 ## Consequences
 - **Easier:** testing and tuning detectors with synthetic or recorded frames; renaming the app (one display-name setting); swapping the pose engine.
 - **Harder:** the hand-written project file has to be maintained when targets change. There is no MediaPipe-style model-size choice per device.
