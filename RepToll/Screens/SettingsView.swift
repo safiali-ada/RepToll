@@ -87,7 +87,7 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .familyActivityPicker(isPresented: $showPicker, selection: $draftSelection)
             .onChange(of: showPicker) { _, isShowing in
-                if !isShowing { model.saveSelection(draftSelection) }
+                if !isShowing { Task { await model.saveSelectionCheckingPro(draftSelection) } }
             }
             .task { await permissions.refresh() }
             .onAppear { recordings = PoseRecorder.recordings() }

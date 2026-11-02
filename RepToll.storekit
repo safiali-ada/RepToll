@@ -7,9 +7,6 @@
 
   ],
   "settings" : {
-    "_compatibilityTimeRate" : {
-      "3" : 6
-    },
     "_failTransactionsEnabled" : false,
     "_locale" : "it_IT",
     "_storefront" : "ITA",

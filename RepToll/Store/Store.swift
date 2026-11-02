@@ -2,6 +2,9 @@ import Foundation
 import Observation
 import RepTollShared
 import StoreKit
+import os
+
+private let log = Logger(subsystem: "com.syedsafiali.RepToll", category: "Store")
 
 /// RepToll Pro subscription state, backed by StoreKit 2. No server: entitlements are verified on device.
 @Observable
@@ -12,8 +15,8 @@ final class Store {
     static let proProductID = "com.syedsafiali.RepToll.pro.quarterly"
     /// Apple's standard EULA; App Review accepts it as the Terms of Use link.
     static let termsURL = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
-    /// Must be a public page before submitting. See docs/MONETIZATION.md.
-    static let privacyURL = URL(string: "https://github.com/safiali-ada/RepToll/blob/main/docs/PRIVACY.md")!
+    /// Public policy page in safiali-ada/PrivacyPolicy (source: docs/PRIVACY.md).
+    static let privacyURL = URL(string: "https://github.com/safiali-ada/PrivacyPolicy/blob/main/README_RepToll.md")!
 
     private(set) var isPro: Bool
     private(set) var renewalDate: Date?
@@ -31,18 +34,42 @@ final class Store {
         }
     }
 
-    /// Re-derives Pro status from the user's current entitlements.
+    /// Re-derives Pro status. Uses the subscription status API (the same source the paywall uses
+    /// for "your current plan") and falls back to current entitlements, so the two can't disagree.
     func refresh() async {
         var active = false
         var renewal: Date?
+
+        if let product = try? await Product.products(for: [Self.proProductID]).first,
+           let statuses = try? await product.subscription?.status {
+            for status in statuses {
+                log.info("Subscription status: \(String(describing: status.state), privacy: .public)")
+                switch status.state {
+                case .subscribed, .inGracePeriod, .inBillingRetryPeriod:
+                    active = true
+                    if case .verified(let transaction) = status.transaction { renewal = transaction.expirationDate }
+                default:
+                    break
+                }
+            }
+        }
+
         for await result in Transaction.currentEntitlements {
-            guard case .verified(let transaction) = result,
-                  transaction.productID == Self.proProductID,
-                  transaction.revocationDate == nil else { continue }
+            let transaction: Transaction
+            switch result {
+            case .verified(let verified):
+                transaction = verified
+            case .unverified(let unverified, let error):
+                log.error("Unverified transaction \(unverified.productID, privacy: .public): \(error.localizedDescription, privacy: .public)")
+                continue
+            }
+            guard transaction.productID == Self.proProductID, transaction.revocationDate == nil else { continue }
             if let expiration = transaction.expirationDate, expiration < .now { continue }
             active = true
-            renewal = transaction.expirationDate
+            renewal = renewal ?? transaction.expirationDate
         }
+
+        log.info("RepToll Pro active: \(active, privacy: .public)")
         setPro(active, renewal: renewal)
     }
 

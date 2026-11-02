@@ -13,7 +13,7 @@
 The shared **RepToll** scheme uses `RepToll.storekit`. Check this under Product ▸ Scheme ▸ Edit Scheme ▸ Run ▸ Options ▸ StoreKit Configuration.
 1. Run on the device. Settings ▸ **Unlock RepToll Pro** buys the subscription with a fake local transaction.
 2. Pick 2+ apps on the free plan. The paywall appears. After subscribing, all picks apply.
-3. In Xcode, Debug ▸ StoreKit ▸ Manage Transactions lets you refund or expire it to test the free state. The config renews every 6 seconds per day of the period, so 3 months ≈ 9 minutes.
+3. In Xcode, Debug ▸ StoreKit ▸ Manage Transactions lets you refund or expire it to test the free state. Renewals run in real time; change the rate under Editor ▸ Subscription Renewal Rate in `RepToll.storekit` if needed.
 
 ## App Store Connect checklist
 1. **Agreements, Tax, and Banking:** accept the **Paid Apps** agreement and add your bank account and tax forms. Nothing can be sold until this shows *Active*.
@@ -28,7 +28,7 @@ The shared **RepToll** scheme uses `RepToll.storekit`. Check this under Product 
    - Add a display name, a description and a review screenshot of the paywall.
 5. Optional: under the subscription ▸ **Introductory Offers**, add a free trial (e.g. 1 week). The paywall shows it automatically.
 6. **App Privacy** and **App Information:**
-   - Add a public **Privacy Policy URL**. `docs/PRIVACY.md` is ready, but this repo is private, so publish it somewhere public and update `Store.privacyURL`.
+   - **Privacy Policy URL:** https://github.com/safiali-ada/PrivacyPolicy/blob/main/README_RepToll.md (public repo; source text in `docs/PRIVACY.md`).
    - The Terms of Use link uses Apple's standard EULA (`Store.termsURL`). If you write your own terms, add the link in the app description too.
 7. Submit the first subscription **together with an app version**. Apple reviews them together the first time.
 

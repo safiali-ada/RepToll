@@ -81,6 +81,12 @@ final class AppModel {
         refresh()
     }
 
+    /// Refreshes the subscription first so a just-made purchase is never missed.
+    func saveSelectionCheckingPro(_ newSelection: FamilyActivitySelection) async {
+        await Store.shared.refresh()
+        saveSelection(newSelection)
+    }
+
     private func applyPendingSelection() {
         guard let pending = pendingSelection else { return }
         pendingSelection = nil

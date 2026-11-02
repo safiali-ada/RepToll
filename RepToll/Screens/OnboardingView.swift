@@ -35,7 +35,7 @@ struct OnboardingView: View {
         .task { await permissions.refresh() }
         .familyActivityPicker(isPresented: $showPicker, selection: $selection)
         .onChange(of: showPicker) { _, isShowing in
-            if !isShowing { model.saveSelection(selection) }
+            if !isShowing { Task { await model.saveSelectionCheckingPro(selection) } }
         }
     }
 
