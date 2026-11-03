@@ -16,14 +16,18 @@ struct StatsView: View {
     private var lastSevenDays: [DayTotal] {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
+        // One pass over the records, grouped by day and exercise. Newest first, so stop at the week's start.
+        let weekStart = calendar.date(byAdding: .day, value: -6, to: today) ?? today
+        var units: [Date: [Exercise: Int]] = [:]
+        for record in records {
+            if record.date < weekStart { break }
+            units[calendar.startOfDay(for: record.date), default: [:]][record.exercise, default: 0] += record.units
+        }
         var totals: [DayTotal] = []
         for offset in (0..<7).reversed() {
             guard let day = calendar.date(byAdding: .day, value: -offset, to: today) else { continue }
             for exercise in Exercise.allCases {
-                let units = records
-                    .filter { calendar.isDate($0.date, inSameDayAs: day) && $0.exercise == exercise }
-                    .reduce(0) { $0 + $1.units }
-                totals.append(DayTotal(day: day, exercise: exercise, units: units))
+                totals.append(DayTotal(day: day, exercise: exercise, units: units[day]?[exercise] ?? 0))
             }
         }
         return totals

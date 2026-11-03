@@ -4,7 +4,9 @@ import RepTollKit
 
 struct HomeView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.scenePhase) private var scenePhase
     @Query(sort: \WorkoutRecord.date, order: .reverse) private var records: [WorkoutRecord]
+    @State private var permissions = Permissions()
 
     private var streak: Int { Streaks.current(activeDays: Set(records.map(\.date)), today: .now) }
     private var todayUnits: Int {
@@ -14,13 +16,15 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                HStack {
+                HStack(spacing: 14) {
                     Wordmark(size: 26)
                     Spacer()
-                    pauseMenu
+                    if !Store.shared.isPro { goProButton }
+                    if !model.isStrict { pauseMenu }
                 }
                 .padding(.bottom, 4)
 
+                permissionWarnings
                 statusBanner
                 bankCard
 
@@ -55,6 +59,51 @@ struct HomeView: View {
         }
         .scrollIndicators(.hidden)
         .background(Theme.background)
+        .task(id: scenePhase) { if scenePhase == .active { await permissions.refresh() } }
+    }
+
+    private var goProButton: some View {
+        Button {
+            model.sheet = .paywall(reason: nil)
+        } label: {
+            Label("Go Pro", systemImage: "sparkles")
+                .font(.subheadline.weight(.bold))
+                .padding(.horizontal, 12).padding(.vertical, 7)
+                .background(Theme.accent, in: .capsule)
+                .foregroundStyle(.black)
+        }
+    }
+
+    /// Without Screen Time nothing gets locked, and without notifications the shield's button
+    /// can't bring the user back here, so say so instead of failing quietly.
+    @ViewBuilder
+    private var permissionWarnings: some View {
+        if permissions.isLoaded && !permissions.screenTime {
+            warning("Screen Time is off", "RepToll can't lock any apps until you allow it.") {
+                await permissions.requestScreenTime()
+            }
+        }
+        if permissions.isLoaded && !permissions.notifications {
+            warning("Notifications are off", "Tapping a locked app can't bring you here to earn time.") {
+                await permissions.requestNotifications()
+                if !permissions.notifications, let url = URL(string: UIApplication.openNotificationSettingsURLString) {
+                    await UIApplication.shared.open(url)
+                }
+            }
+        }
+    }
+
+    private func warning(_ title: String, _ detail: String, fix: @escaping () async -> Void) -> some View {
+        Card {
+            Label(title, systemImage: "exclamationmark.triangle.fill")
+                .font(.headline)
+                .foregroundStyle(.orange)
+            Text(detail)
+                .font(.subheadline)
+                .foregroundStyle(Theme.secondaryText)
+            Button("Turn on") { Task { await fix() } }
+                .font(.subheadline.weight(.semibold))
+        }
     }
 
     private var bankCard: some View {

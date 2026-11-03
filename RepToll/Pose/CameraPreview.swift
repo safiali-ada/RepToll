@@ -30,10 +30,9 @@ struct CameraPreview: UIViewRepresentable {
 
 /// Draws the tracked joints over the aspect-filled camera preview. Bones stay calm white;
 /// only joints with a problem get a red ring, so the overlay doesn't flash.
+/// Reads the model itself so per-frame updates redraw only this view, not the whole camera screen.
 struct SkeletonOverlay: View {
-    let points: [Joint: CGPoint]
-    let imageSize: CGSize
-    let problems: Set<Joint>
+    let session: ExerciseSessionModel
 
     private static let bones: [(Joint, Joint)] = [
         (.leftShoulder, .rightShoulder), (.leftShoulder, .leftElbow), (.leftElbow, .leftWrist),
@@ -43,6 +42,7 @@ struct SkeletonOverlay: View {
     ]
 
     var body: some View {
+        let points = session.overlay, imageSize = session.imageSize, problems = session.problems
         Canvas { context, size in
             let scale = max(size.width / imageSize.width, size.height / imageSize.height)
             let drawn = CGSize(width: imageSize.width * scale, height: imageSize.height * scale)

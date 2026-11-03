@@ -25,6 +25,16 @@ nonisolated final class PosePipeline: NSObject, AVCaptureVideoDataOutputSampleBu
     private var use3D = true
     private var isConfigured = false
     private var continuation: AsyncStream<PoseSample>.Continuation?
+    // Thermal throttling: `device` and `isThrottled` belong to `sessionQueue`, `skips3D` to `videoQueue`.
+    private var device: AVCaptureDevice?
+    private var isThrottled = false
+    private var skips3D = false
+
+    override init() {
+        super.init()
+        NotificationCenter.default.addObserver(self, selector: #selector(thermalStateChanged),
+                                               name: ProcessInfo.thermalStateDidChangeNotification, object: nil)
+    }
 
     private static let joints2D: [RepTollKit.Joint: VNHumanBodyPoseObservation.JointName] = [
         .leftShoulder: .leftShoulder, .rightShoulder: .rightShoulder,
@@ -92,7 +102,35 @@ nonisolated final class PosePipeline: NSObject, AVCaptureVideoDataOutputSampleBu
                 connection.isVideoMirrored = true
             }
         }
+        self.device = device
         isConfigured = true
+        applyThermalState()
+    }
+
+    @objc private func thermalStateChanged() {
+        sessionQueue.async { [self] in applyThermalState() }
+    }
+
+    /// On `sessionQueue`. At `.serious` or hotter, drops 3D pose and caps capture at 20 fps;
+    /// once it cools to `.fair` or below, restores the default 30 fps and 3D.
+    private func applyThermalState() {
+        let state = ProcessInfo.processInfo.thermalState
+        let hot = state == .serious || state == .critical
+        guard let device, hot != isThrottled else { return }
+        let slow = CMTime(value: 1, timescale: 20)
+        if hot, !device.activeFormat.videoSupportedFrameRateRanges.contains(where: { $0.minFrameRate <= 20 }) { return }
+        do { try device.lockForConfiguration() } catch { return }
+        if hot {
+            if device.activeVideoMaxFrameDuration < slow { device.activeVideoMaxFrameDuration = slow }
+            device.activeVideoMinFrameDuration = slow
+        } else {
+            // Invalid resets both to the format's defaults.
+            device.activeVideoMinFrameDuration = .invalid
+            device.activeVideoMaxFrameDuration = .invalid
+        }
+        device.unlockForConfiguration()
+        isThrottled = hot
+        videoQueue.async { [self] in skips3D = hot }
     }
 
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
@@ -102,18 +140,19 @@ nonisolated final class PosePipeline: NSObject, AVCaptureVideoDataOutputSampleBu
         let started = CACurrentMediaTime()
 
         let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .up)
+        let with3D = use3D && !skips3D
         do {
-            try handler.perform(use3D ? [request2D, request3D] : [request2D])
+            try handler.perform(with3D ? [request2D, request3D] : [request2D])
         } catch {
             // 3D pose isn't available everywhere; keep going with 2D only.
-            if use3D { use3D = false }
+            if with3D { use3D = false }
             return
         }
 
         var points: [RepTollKit.Joint: PosePoint] = [:]
         var overlay: [RepTollKit.Joint: CGPoint] = [:]
         if let body = request2D.results?.first {
-            let body3D = use3D ? request3D.results?.first : nil
+            let body3D = with3D ? request3D.results?.first : nil
             let aspect = Double(width) / Double(max(height, 1))
             for joint in RepTollKit.Joint.allCases {
                 guard let name = Self.joints2D[joint],

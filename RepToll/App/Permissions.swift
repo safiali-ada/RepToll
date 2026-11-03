@@ -8,6 +8,8 @@ final class Permissions {
     private(set) var screenTime = false
     private(set) var camera = false
     private(set) var notifications = false
+    /// False until the first `refresh()`, so screens don't flash "denied" before checking.
+    private(set) var isLoaded = false
 
     var allGranted: Bool { screenTime && camera && notifications }
 
@@ -16,6 +18,7 @@ final class Permissions {
         camera = AVCaptureDevice.authorizationStatus(for: .video) == .authorized
         let settings = await UNUserNotificationCenter.current().notificationSettings()
         notifications = settings.authorizationStatus == .authorized
+        isLoaded = true
     }
 
     func requestScreenTime() async {

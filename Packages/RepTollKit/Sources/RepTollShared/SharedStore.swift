@@ -24,6 +24,13 @@ public final class SharedStore: @unchecked Sendable {
         static let difficulty = "difficulty"
         static let lifetimeEarnedSeconds = "lifetimeEarnedSeconds"
         static let isPro = "isPro"
+        /// Everything except `isPro`, which StoreKit re-derives anyway.
+        static let userData = [bankSeconds, session, selection, pausedUntil, isPaused, difficulty, lifetimeEarnedSeconds]
+    }
+
+    /// Deletes the user's bank, selection, pause and settings. Callers also clear the shield.
+    public func removeUserData() {
+        Key.userData.forEach(defaults.removeObject(forKey:))
     }
 
     /// Cached RepToll Pro status; the app re-verifies it with StoreKit on every launch.

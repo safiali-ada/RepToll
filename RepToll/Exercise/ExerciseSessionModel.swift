@@ -79,7 +79,8 @@ final class ExerciseSessionModel {
 
     private func handle(_ sample: PoseSample) {
         updateOverlay(sample.overlay)
-        imageSize = sample.imageSize
+        // Only assign on change: @Observable notifies on every set, even with an equal value.
+        if imageSize != sample.imageSize { imageSize = sample.imageSize }
         recorder?.append(sample.frame)
 
         let next: Status
@@ -106,13 +107,13 @@ final class ExerciseSessionModel {
     private func setStatus(_ next: Status, problems joints: Set<Joint>, at time: TimeInterval) {
         guard next != status else {
             pendingStatus = nil
-            problems = joints
+            if problems != joints { problems = joints }
             return
         }
         // Counting is immediate feedback; everything else waits to be stable.
         if (next == .tracking && status == .starting) || (pendingStatus == next && time - pendingSince >= Self.statusHold) {
             status = next
-            problems = joints
+            if problems != joints { problems = joints }
             pendingStatus = nil
         } else if pendingStatus != next {
             pendingStatus = next

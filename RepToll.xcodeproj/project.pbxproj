@@ -183,6 +183,7 @@
 			buildPhases = (
 				AE0000000000000000000002 /* Sources */,
 				AF0000000000000000000002 /* Frameworks */,
+				B00000000000000000000002 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -205,6 +206,7 @@
 			buildPhases = (
 				AE0000000000000000000003 /* Sources */,
 				AF0000000000000000000003 /* Frameworks */,
+				B00000000000000000000003 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -227,6 +229,7 @@
 			buildPhases = (
 				AE0000000000000000000004 /* Sources */,
 				AF0000000000000000000004 /* Frameworks */,
+				B00000000000000000000004 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -294,6 +297,27 @@
 
 /* Begin PBXResourcesBuildPhase section */
 		B00000000000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B00000000000000000000002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B00000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B00000000000000000000004 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -465,6 +489,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = RepToll;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "RepToll uses the camera to count your reps. Video never leaves your phone.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -494,6 +519,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = RepToll;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "RepToll uses the camera to count your reps. Video never leaves your phone.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

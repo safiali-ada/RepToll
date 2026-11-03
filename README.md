@@ -28,7 +28,7 @@ Open `RepToll.xcodeproj` and run the **RepToll** scheme on a **physical iPhone**
 3. Tune `DetectionThresholds.default` (`minConfidence`) after a few real sessions.
 
 ## Pricing
-Free plan locks 1 app; **RepToll Pro** is €0.99 every 3 months for unlimited apps. Setup and testing: [docs/MONETIZATION.md](docs/MONETIZATION.md).
+Free plan locks 1 app. **RepToll Pro** adds unlimited apps and Strict Mode: €11.99/year (7-day free trial), €2.99 every 3 months, or €24.99 lifetime. Setup and testing: [docs/MONETIZATION.md](docs/MONETIZATION.md). Store listing: [docs/APP_STORE.md](docs/APP_STORE.md).
 
 ## Tuning rep counting
 Settings → Tuning → **Record pose data** saves joint positions (no video) from each workout. Share the JSON files to add real-movement regression tests in `Packages/RepTollKit/Tests`.

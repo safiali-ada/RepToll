@@ -145,6 +145,13 @@ public enum BudgetController {
         if store.activeSession == nil { Shield.apply(store) }
     }
 
+    /// Unlocks everything, stops all monitoring and deletes the shared state ("Reset all data").
+    public static func resetAll(store: SharedStore = .shared) {
+        DeviceActivityCenter().stopMonitoring()
+        Shield.clear()
+        store.removeUserData()
+    }
+
     static func oneOffSchedule(from start: Date, to end: Date) -> DeviceActivitySchedule {
         let parts: Set<Calendar.Component> = [.year, .month, .day, .hour, .minute, .second]
         let calendar = Calendar.current

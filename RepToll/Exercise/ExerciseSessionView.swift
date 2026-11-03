@@ -18,7 +18,7 @@ struct ExerciseSessionView: View {
         ZStack {
             CameraPreview(session: session.pipeline.session)
                 .ignoresSafeArea()
-            SkeletonOverlay(points: session.overlay, imageSize: session.imageSize, problems: session.problems)
+            SkeletonOverlay(session: session)
                 .ignoresSafeArea()
                 .opacity(showSetup ? 0 : 1)
             LinearGradient(colors: [.black.opacity(0.75), .clear], startPoint: .top, endPoint: .center)

@@ -44,6 +44,18 @@ final class AppModel {
         didSet { UserDefaults.standard.set(recordsPoses, forKey: "recordsPoses") }
     }
 
+    /// Pro: hides the pause menu so the only way into a locked app is earned time.
+    var strictMode: Bool = UserDefaults.standard.bool(forKey: "strictMode") {
+        didSet { UserDefaults.standard.set(strictMode, forKey: "strictMode") }
+    }
+
+    var isStrict: Bool { strictMode && Store.shared.isPro }
+
+    /// The paywall is offered once at the end of onboarding, then only at limits or on request.
+    private var hasSeenIntroPaywall: Bool = UserDefaults.standard.bool(forKey: "hasSeenIntroPaywall") {
+        didSet { UserDefaults.standard.set(hasSeenIntroPaywall, forKey: "hasSeenIntroPaywall") }
+    }
+
     var bankMinutes: Int { bankSeconds / 60 }
     var spendableMinutes: Int { Ledger.spendableMinutes(bankSeconds: bankSeconds) }
 
@@ -128,6 +140,24 @@ final class AppModel {
 
     func finishOnboarding() {
         hasOnboarded = true
+        refresh()
+        // A paywall the onboarding selection already triggered counts as the intro one.
+        if !Store.shared.isPro && !hasSeenIntroPaywall && sheet == nil {
+            sheet = .paywall(reason: nil)
+        }
+        hasSeenIntroPaywall = true
+    }
+
+    /// Settings ▸ Reset all data. Workout history (SwiftData) is deleted by the caller.
+    func resetAllData() {
+        BudgetController.resetAll(store: store)
+        PoseRecorder.deleteAll()
+        pendingSelection = nil
+        strictMode = false
+        isMuted = false
+        recordsPoses = false
+        difficulty = .medium
+        hasOnboarded = false
         refresh()
     }
 
