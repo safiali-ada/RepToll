@@ -24,22 +24,24 @@ struct RepTollApp: App {
     }
 }
 
-final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+/// The notification delegate methods stay main-actor isolated: UIKit asserts if the completion of
+/// `didReceive` comes back off the main thread, which crashed the app when opened from the shield's banner.
+final class AppDelegate: NSObject, UIApplicationDelegate, @MainActor UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         UNUserNotificationCenter.current().delegate = self
         return true
     }
 
-    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                            didReceive response: UNNotificationResponse) async {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse) async {
         let action = response.notification.request.content.userInfo[ShieldNotification.actionKey] as? String
         guard action == ShieldNotification.openUnlock else { return }
-        await MainActor.run { AppModel.shared.handleShieldTap() }
+        AppModel.shared.handleShieldTap()
     }
 
-    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                            willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         [.banner, .sound]
     }
 }

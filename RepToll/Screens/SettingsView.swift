@@ -111,6 +111,7 @@ struct SettingsView: View {
                 if !isShowing { Task { await model.saveSelectionCheckingPro(draftSelection) } }
             }
             .task { await permissions.refresh() }
+            .task { await permissions.watchScreenTime() }
             .onAppear { recordings = PoseRecorder.recordings() }
             .manageSubscriptionsSheet(isPresented: $showManageSubscription)
             .alert(restoreMessage ?? "", isPresented: .init(

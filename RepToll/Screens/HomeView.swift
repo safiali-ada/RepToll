@@ -60,6 +60,7 @@ struct HomeView: View {
         .scrollIndicators(.hidden)
         .background(Theme.background)
         .task(id: scenePhase) { if scenePhase == .active { await permissions.refresh() } }
+        .task { await permissions.watchScreenTime() }
     }
 
     private var goProButton: some View {
@@ -78,7 +79,7 @@ struct HomeView: View {
     /// can't bring the user back here, so say so instead of failing quietly.
     @ViewBuilder
     private var permissionWarnings: some View {
-        if permissions.isLoaded && !permissions.screenTime {
+        if permissions.screenTimeMissing {
             warning("Screen Time is off", "RepToll can't lock any apps until you allow it.") {
                 await permissions.requestScreenTime()
             }
