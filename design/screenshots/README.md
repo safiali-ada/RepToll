@@ -50,3 +50,14 @@ sips -g pixelWidth -g pixelHeight -g hasAlpha design/screenshots/out/*.png
 ```
 
 Layout settings (caption size, device width, bezel, colours) are constants at the top of `render.swift`.
+
+## Device screenshots (shield, camera, paywall)
+Real-iPhone captures need their status bar cleaned first (wrong time, live activities, notification banners):
+
+```bash
+swift design/screenshots/clean.swift ~/Downloads/shield.png design/screenshots/raw/01-shield.png --clear 440 --statusbar design/screenshots/raw/03-home.png
+swift design/screenshots/clean.swift ~/Downloads/camera.png design/screenshots/raw/02-camera.png --clear 0
+swift design/screenshots/clean.swift ~/Downloads/paywall.png design/screenshots/raw/06-paywall.png --statusbar design/screenshots/raw/03-home.png
+```
+
+`--clear` paints over that many pixels at the top with the screen's background color (440 also hides a notification banner); `--statusbar` lays the Simulator's 9:41 status bar back on top. Convert HEIC first with `sips -s format png in.HEIC --out in.png`.
