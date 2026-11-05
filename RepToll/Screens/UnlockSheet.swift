@@ -65,6 +65,7 @@ struct UnlockSheet: View {
         }
         .padding(24)
         .padding(.top, 12)
+        .frame(maxHeight: .infinity, alignment: .top)
         .presentationDetents([.large])
         .presentationDragIndicator(.visible)
         .presentationBackground(.black)

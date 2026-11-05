@@ -13,6 +13,9 @@ struct RepTollApp: App {
         WindowGroup {
             RootView()
                 .environment(model)
+                #if DEBUG
+                .demoModelContainer()
+                #endif
                 .preferredColorScheme(.dark)
                 .tint(Theme.accent)
                 .onChange(of: scenePhase) { _, phase in

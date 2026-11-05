@@ -1,0 +1,10 @@
+{
+  "shots": [
+    { "file": "01-shield.png",  "caption": "Doomscroll apps stay locked",    "highlight": "locked" },
+    { "file": "02-camera.png",  "caption": "Every rep counted on-device",    "highlight": "on-device" },
+    { "file": "03-home.png",    "caption": "Bank minutes, not regrets",      "highlight": "minutes" },
+    { "file": "04-unlock.png",  "caption": "Unlock exactly what you earned", "highlight": "earned" },
+    { "file": "05-stats.png",   "caption": "Watch your streak grow",         "highlight": "streak" },
+    { "file": "06-paywall.png", "caption": "Unlimited apps with Pro",        "highlight": "Pro" }
+  ]
+}

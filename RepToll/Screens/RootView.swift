@@ -2,15 +2,20 @@ import SwiftUI
 
 struct RootView: View {
     @Environment(AppModel.self) private var model
+    #if DEBUG
+    @State private var tab = DemoMode.screen == .stats ? "stats" : "home"
+    #else
+    @State private var tab = "home"
+    #endif
 
     var body: some View {
         @Bindable var model = model
         Group {
             if model.hasOnboarded {
-                TabView {
-                    Tab("Home", systemImage: "bolt.fill") { HomeView() }
-                    Tab("Stats", systemImage: "chart.bar.fill") { StatsView() }
-                    Tab("Settings", systemImage: "gearshape.fill") { SettingsView() }
+                TabView(selection: $tab) {
+                    Tab("Home", systemImage: "bolt.fill", value: "home") { HomeView() }
+                    Tab("Stats", systemImage: "chart.bar.fill", value: "stats") { StatsView() }
+                    Tab("Settings", systemImage: "gearshape.fill", value: "settings") { SettingsView() }
                 }
             } else {
                 OnboardingView()

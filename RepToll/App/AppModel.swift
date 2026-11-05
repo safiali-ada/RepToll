@@ -15,7 +15,11 @@ final class AppModel {
         var id: Self { self }
     }
 
+    #if DEBUG
+    @ObservationIgnored let store = DemoMode.isOn ? DemoMode.store : SharedStore.shared
+    #else
     @ObservationIgnored let store = SharedStore.shared
+    #endif
 
     private(set) var bankSeconds = 0
     private(set) var session: BudgetSession?
@@ -31,9 +35,15 @@ final class AppModel {
         didSet { store.difficulty = difficulty }
     }
 
+    #if DEBUG
+    var hasOnboarded: Bool = DemoMode.isOn || UserDefaults.standard.bool(forKey: "hasOnboarded") {
+        didSet { UserDefaults.standard.set(hasOnboarded, forKey: "hasOnboarded") }
+    }
+    #else
     var hasOnboarded: Bool = UserDefaults.standard.bool(forKey: "hasOnboarded") {
         didSet { UserDefaults.standard.set(hasOnboarded, forKey: "hasOnboarded") }
     }
+    #endif
 
     var isMuted: Bool = UserDefaults.standard.bool(forKey: "isMuted") {
         didSet { UserDefaults.standard.set(isMuted, forKey: "isMuted") }
@@ -66,17 +76,32 @@ final class AppModel {
         difficulty = store.difficulty
         refresh()
         Store.shared.onProActivated = { [weak self] in self?.applyPendingSelection() }
+        #if DEBUG
+        switch DemoMode.screen {
+        case .unlock: sheet = .unlock
+        case .paywall: sheet = .paywall(reason: nil)
+        default: break
+        }
+        #endif
     }
 
     /// Re-syncs with the shared store (extensions may have changed it) and fixes shield drift.
     func refresh() {
-        if hasOnboarded { BudgetController.reconcile(store: store) }
+        #if DEBUG
+        let reconciles = hasOnboarded && !DemoMode.isOn
+        #else
+        let reconciles = hasOnboarded
+        #endif
+        if reconciles { BudgetController.reconcile(store: store) }
         bankSeconds = store.bankSeconds
         session = store.activeSession
         isPaused = store.isPaused
         pausedUntil = store.pausedUntil
         selection = store.selection
         restrictedCount = store.restrictedCount
+        #if DEBUG
+        if DemoMode.isOn { restrictedCount = DemoMode.restrictedCount }
+        #endif
     }
 
     /// Saves the restricted apps. On the free plan, extra items wait behind the paywall:

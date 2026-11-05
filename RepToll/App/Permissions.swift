@@ -22,6 +22,14 @@ final class Permissions {
     var allGranted: Bool { screenTime && camera && notifications }
 
     func refresh() async {
+        #if DEBUG
+        // Demo screenshots show a set-up user; the Simulator has no Screen Time.
+        if DemoMode.isOn {
+            setScreenTime(.approved)
+            (camera, notifications, isLoaded) = (true, true, true)
+            return
+        }
+        #endif
         setScreenTime(AuthorizationCenter.shared.authorizationStatus)
         camera = AVCaptureDevice.authorizationStatus(for: .video) == .authorized
         let settings = await UNUserNotificationCenter.current().notificationSettings()
@@ -31,6 +39,9 @@ final class Permissions {
 
     /// Follows the live Screen Time status for as long as the calling view's task runs.
     func watchScreenTime() async {
+        #if DEBUG
+        if DemoMode.isOn { return }
+        #endif
         let settle = Task {
             try? await Task.sleep(for: .seconds(2))
             screenTimeSettled = true
